@@ -1,0 +1,107 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>首页 - Kangz博客</title>
+<meta name="keywords" content="首页 - Kangz博客" />
+<meta name="description" content="90后个人博客，一个喜欢绘画的程序员！" />
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-home-img-container">
+    <img src="/static/img/tm-contact-img.jpg" alt="Image" class="hidden-lg-up img-fluid">
+</div>
+<section class="tm-section">
+    <div class="container-fluid">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="padding: 20px;">
+            <div class="row">
+                <h3 class="tm-gold-text tm-title">文章推荐</h3>
+                {{range .StickTopics}}
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="tm-content-box">
+                        <a href="/topic/view/{{.Id}}" target="_blank"><img src="/attachment/topic/200w/{{.Attachment}}" alt="{{.Title}}"  class="tm-margin-b-20 img-fluid" style="width:100%;height: 150px;" title="{{.Title}}"></a>
+                        <a href="/topic/view/{{.Id}}" target="_blank"><h6 class="index_font"><span style="color: red;">[置顶]</span><span>{{.Title}}</span></h6> </a>
+                        <!-- <p class="tm-margin-b-20">{{str2html .Content}}</p> -->
+                    </div>
+                </div>
+                {{end}}
+                </div> <!-- row -->
+                <div class="row" style="padding-top: 20px;">
+                    <h3 class="tm-gold-text tm-title">最新发布</h3>
+                    {{range .Topics}}
+                    <article class="excerpt" style="padding: 10px 0 10px 10px">
+                        <div class="tm-related-post">
+                            <div class="media-left media-middle">
+                                <a href="/topic/view/{{.Id}}" target="_blank">
+                                    <img class="media-object" src="/attachment/topic/200w/{{.Attachment}}" style="width:200px;height: 150px;" alt="{{.Title}}" title="{{.Title}}"  >
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a href="/topic/view/{{.Id}}" target="_blank"><h5 class="index_title">{{.Title}}</h5></a>
+                                <p class="tm-small-font tm-media-description">{{str2html .Content}}</p>
+                                
+                                <div class="data" style="margin-top: 10px">
+                                        <span class="time_n artfont1">{{substr .Created 0 10}}</span>
+                                        <span class="read_n artfont2">浏览（{{.Views}}）</span>
+                                        <span class="comment_n artfont3">
+                                        <a class="dateview3" href="/article/aplit/1?cate={{.Category}}" target="_blank">{{.Category}}</a>
+                                         </span>
+                                        <a href="/topic/view/{{.Id}}" target="_blank" class="btn readall">阅读全文>></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </article>
+                    {{end}}
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-1">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="padding: 20px;">
+                <div class="row" style="padding-bottom: 30px">
+                    <form method="post" action="/article/search" class="form-wrapper">
+                        <input type="text" id="search" name="search" placeholder="请输入要搜索的文章" required>
+                        <input type="submit" value="搜索" id="submit">
+                    </form>
+                </div>
+                
+                <div class="row" style="padding-bottom: 30px">
+                    <div class="rnav">
+                        <h3 class="tm-gold-text tm-title">博文分类</h3><hr style="height:10px;border:none;border-top:10px groove #ffe3bc;" />
+                        <ul>
+                            <li><a href="/about" target="_blank" class="tm-text-link">关于</a></li>
+                            <li><a href="/gallery"  target="_blank" class="tm-text-link">画廊</a></li>
+                            <li><a href="/article" target="_blank" class="tm-text-link">文章</a></li>
+                            <li><a href="/speack" target="_blank" class="tm-text-link">说说</a></li>
+                            <li><a href="http://kangz.win:8080/game"  target="_blank"  class="tm-text-link">游戏</a></li>
+                            <li><a href="/messageboard" target="_blank" class="tm-text-link">留言板</a></li>
+                            {{range .Categories}}
+                            <li><a href="/article/aplit/1?cate={{.Title}}" target="_blank" class="tm-text-link">{{.Title}}</a></li>
+                            {{end}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 30px">
+                    <div class="rnav">
+                        <h3 class="tm-gold-text tm-title">分享</h3><hr style="height:10px;border:none;border-top:10px groove #ffe3bc;" />
+                        
+                        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 30px">
+                    <div class="rnav">
+                        <h3 class="tm-gold-text tm-title">友情链接</h3><hr style="height:10px;border:none;border-top:10px groove #ffe3bc;" />
+                        <ul>
+                            <li><a href="http://www.chenxiaojie.club" target="_blank" title="陈晓杰博客">陈骁杰博客</a></li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="row" style="padding-bottom: 30px;">
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=360 src="//music.163.com/outchain/player?type=0&id=610186958&auto=1&height=430"></iframe>
+                </div>
+                
+              
+
+            </div>
+        </div>
+    </section>
+    {{end}}

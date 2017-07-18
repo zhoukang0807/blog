@@ -1,0 +1,38 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>{{i18n .Lang "registerTitle"}} - Kangz博客</title>
+{{end}}
+{{define "body"}}
+<div action="/register" method="post"  class="container" style="width: 500px;">
+    <h3>{{i18n .Lang "registerText"}}</h3>
+    <br>
+    <form  class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-3 control-label">{{i18n .Lang "username"}}: </label>
+            <div class="col-md-5">
+                  <input type="text" class="form-control" name="uname" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+                <label class="col-md-3 control-label">{{i18n .Lang "password"}}: </label>
+                <div class="col-md-5">
+                  <input type="password" class="form-control" name="password" required>
+               </div>
+        </div>
+
+        <div class="form-group">
+                <label class="col-md-3 control-label">{{i18n .Lang "passwordSure"}}: </label>
+                <div class="col-md-5">
+                  <input type="password" class="form-control" name="repassword" required>
+               </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-10">
+                <button type="submit" class="btn btn-info">{{i18n .Lang "register"}}</button>
+            </div>
+        </div>
+    </form>
+</div>
+{{end}}

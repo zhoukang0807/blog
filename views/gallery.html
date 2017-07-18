@@ -1,0 +1,128 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>画廊 - Kangz博客</title>
+<meta name="keywords" content="关于 - 画廊" />
+<meta name="description" content="业余爱好，画的也不怎么样！" />
+<style>
+.delete_css
+{
+	color: black;
+}
+.delete_css:hover,
+.delete_css:focus {
+	color: #CCCC66;
+}
+</style>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	<div class="container-fluid">
+		{{if .IsLogin}}
+		{{if .Gallerys}}
+		<div class="row" style="margin-bottom: 50px">
+			<div class="col-md-8 col-md-offset-2"  style="text-align: center; overflow:hidden" >
+				<a href="/gallery/add" class="btn btn-info">添加图片</a>
+			</div>
+		</div>
+		{{else}}
+		<div class="row" style="margin-bottom: 50px;overflow:hidden">
+			<div class="col-md-8 col-md-offset-2"  style="text-align: center; overflow:hidden">
+				<div id="uploader">
+					<div class="queueList">
+						<div id="dndArea" class="placeholder">
+							<div id="filePicker"></div>
+							<p>或将照片拖到这里，单次最多可选300张</p>
+						</div>
+					</div>
+					<div class="statusBar" style="display:none;">
+						<div class="progress">
+							<span class="text">0%</span>
+							<span class="percentage"></span>
+							</div><div class="info"></div>
+							<div class="btns">
+								<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{end}}
+			{{end}}
+			{{if .Gallerys}}
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div id="fh5co-photos-section" style="overflow:hidden">
+					{{$Login:=.IsLogin}}
+					{{range .Gallerys}}
+					<div  class="col-md-3 animate-box" style="text-align: center;">
+						{{if $Login}}
+						<div style="text-align: right;">
+							<a href="/gallery/delete?id={{.Id}}" class="delete_css animate-box">X</a>
+						</div>
+						{{end}}
+						<a href="/attachment/{{.Uname}}/gallery/{{.Name}}" class="grid-photo img-popup" style="background-image: url(/attachment/{{.Uname}}/gallery/300w/{{.Name}});">
+							<div class="desc">
+								<h3>作者:{{.Uname}}</h3>
+								<span>上传时间:{{.Created}}</span>
+							</div>
+						</a>
+					</div>
+					{{end}}
+					
+				</div>
+			</div>
+			{{end}} 
+		</div>
+	</section>
+	{{if .Gallerys}}
+	<script type="text/javascript">
+		$(function(){
+			contentWayPoint();
+			imgPopup();
+		});
+		// Animations
+		var contentWayPoint = function() {
+			var i = 0;
+			$('.animate-box').waypoint( function( direction ) {
+				if( direction === 'down' && !$(this.element).hasClass('animated') ) {
+					
+					i++;
+					$(this.element).addClass('item-animate');
+					setTimeout(function(){
+						$('body .animate-box.item-animate').each(function(k){
+							var el = $(this);
+							setTimeout( function () {
+								var effect = el.data('animate-effect');
+								if ( effect === 'fadeIn') {
+									el.addClass('fadeIn animated');
+								} else {
+									el.addClass('fadeInUp animated');
+								}
+								el.removeClass('item-animate');
+							},  k * 200, 'easeInOutExpo' );
+						});
+						
+					}, 100);
+					
+				}
+			} , { offset: '85%' } );
+		};
+		var imgPopup = function() {
+			$('body').on('click', '.img-popup', function(event){
+				event.preventDefault();
+				var src = $(this).attr('href');
+				$.magnificPopup.open({
+			items: {
+				src: src
+				},
+				type: 'image'
+				});
+					
+			});
+			
+		};
+		
+	</script>
+	{{end}}
+	{{end}}

@@ -1,0 +1,60 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>说说 - Kangz博客</title>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	<div class="container-fluid">
+		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12 col-xl-12">
+			{{if .IsLogin}}
+			<div class="row">
+				<div class="arrow_box_div">
+					<form method="post" action="/speack" enctype="multipart/form-data">
+						<label>说说内容：</label>
+						<div class="form-group">
+							<textarea name="content"  style="width:100%" required="true">
+							</textarea>
+						</div>
+						<button type="submit" class="btn btn-info">添加说说</button>
+					</form>
+				</div>
+			</div>
+			{{end}}
+			<div class="row">
+				<div class="arrow_box_div">
+					{{range .Speacks}}
+					<ul class="arrow_box"  style="margin-bottom: 20px">
+						<div class="sy"><p>{{.Content}}</p></div>
+						<span class="dateview">{{substr .Created 0 10}}<p  style=" margin: 0;line-height:0;padding:0 0 14px 0; ">{{substr .Created 11 8}}</p></span>
+					</ul>
+					{{end}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="arrow_box_div">
+					<div class="page">
+						<nav class="pagination" style="font-size: 10px">
+							<ul>
+							{{$current:= .CurrentPage}}
+								<li><a>共{{.Count}}条</a></li>
+								{{if gt .CurrentPage 1}}<li><a href="/speack/split/1">第一页</a></li>{{end}}
+								{{if gt .CurrentPage 1}}<li><a href="/speack/split/{{.Prev}}">上一页</a></li>{{end}}
+								{{range .PageArray}}
+								 {{if gt . 0}}
+								  <li {{if eq $current .}} style="background-color: #f0ad4e" {{end}}><a {{if ne $current .}} href="/speack/split/{{.}}" {{end}}>{{.}}</a></li>
+								   {{end}}
+								{{end}}
+								{{if lt .CurrentPage .TotalPage}}<li><a href="/speack/split/{{.Next}}">下一页</a></li>{{end}}
+								{{if lt .CurrentPage .TotalPage}}<li><a href="/speack/split/{{.TotalPage}}">最末页</a></li>{{end}}
+								<li><a>共{{.TotalPage}}页</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{{end}}

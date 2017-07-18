@@ -1,0 +1,75 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>关于 - Kangz博客</title>
+<meta name="keywords" content="关于 - Kangz博客" />
+<meta name="description" content="个人简介，讲述平凡人生！" />
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-about-img-container"></div>
+<section class="tm-section">
+	<div id="fh5co-about-section">
+	   {{if .IsLogin}}
+	   {{if .About}}
+	      <div class="row" style="margin-bottom: 50px">
+			<div class="col-md-8 col-md-offset-2"  >
+			 <a href="/about/modify" class="btn btn-info">编辑</a>
+			</div>
+		</div>
+		{{else}}
+		<div class="row" style="margin-bottom: 50px">
+			<div class="col-md-8 col-md-offset-2"  style="text-align: center;">
+			 <a href="/about/add" class="btn btn-info">添加关于信息</a>
+			</div>
+		</div>
+		{{end}}
+	   {{end}}
+		{{with .About}}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2" style="text-align: center;">
+				<div class="about">
+					<img src="/attachment/{{.Uname}}/about/{{.Headpic}}" alt="{{.Uname}}">
+				</div>
+				<div class="desc">
+					<h3>{{.Nickname}}</h3>
+					<p>{{str2html .Content}}</p>
+				</div>
+			</div>
+		</div>
+		{{end}}
+		{{if .About}}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2" style="float: left;">
+				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 50px;">
+			<div class="col-md-8 col-md-offset-2" style="text-align: center;">
+			<!-- 点赞代码-->
+				<div id="cyEmoji" role="cylabs" data-use="emoji"></div>
+			    <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysRFg40R"></script>
+				<!-- 点赞代码-->
+				<!-- 多说评论框 start -->
+			<div class="ds-thread" data-thread-key="about" data-title="关于" data-url="http://kangz.win/about"></div>
+			<!-- 多说评论框 end -->
+			<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+			<script type="text/javascript">
+			var duoshuoQuery = {short_name:"zkang"};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0]
+					|| document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
+			<!-- 多说公共JS代码 end -->
+			</div>
+		</div>
+		{{end}}
+		
+	</div>
+</section>
+{{end}}

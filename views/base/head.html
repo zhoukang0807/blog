@@ -1,0 +1,45 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/static/img/favicon.jpg" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/templatemo-style.css">
+<link rel="stylesheet" type="text/css" href="/static/dist/css/wangEditor.min.css">
+<link rel="stylesheet" type="text/css" href="/static/highlight/dark.css">
+{{if .IsGallery}}
+{{if .Gallerys}}
+<link rel="stylesheet" type="text/css" href="/static/css/animate.css">
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+{{else}}
+<link rel="stylesheet" href="/static/css/webuploader.css">
+<link rel="stylesheet" href="/static/css/style.css">
+{{end}}
+{{end}}
+{{if .IsGallerys_Add}}
+<link rel="stylesheet" href="/static/css/webuploader.css">
+<link rel="stylesheet" href="/static/css/style.css">
+{{end}}
+<link type="text/css" rel="stylesheet" href="/static/css/datouwang.css" />
+<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script> -->
+<!-- load JS files -->
+<!-- <script src="/static/js/jquery-1.11.3.min.js"></script> -->
+<script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/snow.js"></script>
+
+<script type="text/javascript" src="/static/dist/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="/static/lib/plupload/plupload.full.min.js"></script>
+{{if .IsGallery}}
+{{if .Gallerys}}
+<script type="text/javascript" src="/static/js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.magnific-popup.min.js"></script>
+{{else}}
+<script type="text/javascript" src="/static/webupload/js/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/webupload/js/upload.js"></script>
+{{end}}
+{{end}}
+{{if .IsGallerys_Add}}
+<script type="text/javascript" src="/static/webupload/js/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/webupload/js/upload.js"></script>
+{{end}}

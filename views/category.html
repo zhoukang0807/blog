@@ -1,0 +1,50 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>分类 - Kangz博客</title>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="container">
+    <h1>分类列表</h1>
+    <form action="/category/add" method="post" role="form-horizontal">
+        <div class="form-group">
+            <label>分类类型:</label>
+            <select class="form-control" name="type" required="true">
+              <option value="-999">请选择分类类型</option>
+              <option value="1">绘画</option>
+              <option value="2">学习</option>
+              <option value="3">游戏</option>
+              <option value="4">设计</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>分类名称:</label>
+            <input id="name" type="text" class="form-control" placeholder="请输入分类名称" name="name" required="true">
+        </div>
+        
+        <button type="submit" class="btn btn-info">添加</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>名称</td>
+                <td>文章数</td>
+                <td>类型</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Categories}}
+            <tr>
+                <td>{{.Id}}</td>
+                <td>{{.Title}}</td>
+                <td>{{.TopicCount}}</td>
+                <td>{{.Ctype}}</td>
+                <td><a href="/category/del?id={{.Id}}">删除</a></td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
+{{end}}

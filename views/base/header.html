@@ -1,0 +1,58 @@
+<canvas id="canvas" style="position:fixed; top:0px;left:0px;z-index:100000;pointer-events:none;width: 100%;height: 100%;" width="100%" height="100%"></canvas>
+{{define "navbar"}}
+<div class="tm-header" >
+	<div class="container-fluid">
+		<div class="tm-header-inner">
+			<a href="#" class="navbar-brand tm-site-name">Kangz博客</a>
+			
+			<!-- navbar -->
+			<nav class="navbar tm-main-nav">
+				<button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
+				&#9776;
+				</button>
+				
+				<div class="collapse navbar-toggleable-sm" id="tmNavbar">
+					<ul class="nav navbar-nav">
+						<li {{if .IsHome}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/" class="nav-link">首页</a>
+						</li>
+						<li {{if .IsAbout}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/about" class="nav-link">关于</a>
+						</li>
+						<li {{if .IsGallery}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/gallery" class="nav-link">画廊</a>
+						</li>
+						<li {{if .IsArticle}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/article" class="nav-link">文章</a>
+						</li>
+						<li {{if .IsGame}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="http://kangz.win:8080/game" class="nav-link"  target="_blank" >游戏</a>
+						</li>
+						<li {{if .IsSpeack}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/speack" class="nav-link">说说</a>
+						</li>
+						<li  {{if .IsBoard}} class="nav-item active" {{else}}  class="nav-item" {{end}}>
+							<a href="/messageboard" class="nav-link">留言板</a>
+						</li>
+					</ul>
+				</div>
+				<!--  <div class="pull-right">
+									<ul class="nav navbar-nav">
+											{{if .IsLogin}}
+											<li><a>Admin</a>
+											<ul>
+													<li> <a  href="/category">{{i18n .Lang "category"}}</a></li>
+													<li> <a  href="/topic">{{i18n .Lang "topic"}}</a></li>
+											</ul>
+										</li>
+										<li><a href="/login?exit=true">退出</a></li>
+										{{else}}
+										<li><a href="/login">登陆</a></li>
+										{{end}}
+								</ul>
+			</div> -->
+		</nav>
+	</div>
+</div>
+</div>
+{{end}}

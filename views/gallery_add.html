@@ -1,0 +1,100 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>添加图片 - Kangz博客</title>
+<style>
+.delete_css
+{
+	color: black;
+}
+.delete_css:hover,
+.delete_css:focus {
+	color: #CCCC66;
+}
+</style>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	  <div class="container-fluid">
+		<div class="row" style="margin-bottom: 50px;overflow:hidden">
+			<div class="col-md-8 col-md-offset-2"  style="text-align: center; overflow:hidden">
+			 <div id="uploader">
+                <div class="queueList">
+                    <div id="dndArea" class="placeholder">
+                        <div id="filePicker"></div>
+                        <p>或将照片拖到这里，单次最多可选300张</p>
+                    </div>
+                </div>
+                <div class="statusBar" style="display:none;">
+                    <div class="progress">
+                        <span class="text">0%</span>
+                        <span class="percentage"></span>
+                    </div><div class="info"></div>
+                    <div class="btns">
+                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                    </div>
+                </div>
+            </div>
+			</div>
+		</div>
+        </div>
+</section>
+<script type="text/javascript">
+	$(function(){
+		contentWayPoint();
+		imgPopup();
+	});
+	// Animations
+
+	var contentWayPoint = function() {
+		var i = 0;
+		$('.animate-box').waypoint( function( direction ) {
+
+			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
+				
+				i++;
+
+				$(this.element).addClass('item-animate');
+				setTimeout(function(){
+
+					$('body .animate-box.item-animate').each(function(k){
+						var el = $(this);
+						setTimeout( function () {
+							var effect = el.data('animate-effect');
+							if ( effect === 'fadeIn') {
+								el.addClass('fadeIn animated');
+							} else {
+								el.addClass('fadeInUp animated');
+							}
+
+							el.removeClass('item-animate');
+						},  k * 200, 'easeInOutExpo' );
+					});
+					
+				}, 100);
+				
+			}
+
+		} , { offset: '85%' } );
+	};
+	var imgPopup = function() {
+
+
+		$('body').on('click', '.img-popup', function(event){
+			event.preventDefault();
+			var src = $(this).attr('href');
+			$.magnificPopup.open({
+		      items: {
+			      src: src
+			   },
+			   type: 'image'
+		  	});
+				
+		});
+		
+	};
+	
+</script>
+{{end}}
+ 

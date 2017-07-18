@@ -1,0 +1,130 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>{{.Topic.Title}} - Kangz博客</title>
+<meta name="keywords" content="{{.Topic.Title}}" />
+<meta name="description" content="{{.MetaContent}}" />
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	<div class="container-fluid">
+		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+			{{$labels:=.Labels}}
+			{{$login:=.IsLogin}}
+			{{with .Topic}}
+			<div class="tm-blog-post">
+				<h3 class="tm-gold-text" style="border-bottom: 1px dashed #ccc;text-align: center;">{{.Title}}<br/>
+				<time class="smallfont">
+				<i class="ico icon-time icon12"></i>{{.Created}}</time>
+				<span class="smallfont">浏览（{{.Views}}）</span>
+				<span class="smallfont">类别：{{.Category}}</span>
+				</h3>
+				{{if $login}}
+				<div  style="float: right;" >
+					<a href="/topic/modify?tid={{.Id}}" class="btn btn-info">修改文章</a>
+				</div>
+				{{end}}
+				标签：
+				{{range $labels}}
+				<a class="dateview2" href="/article/aplit/1?label={{.}}" target="_blank">{{.}}</a>
+				{{end}}
+				<br/>
+				<br/>
+				{{str2html .Content}}
+				<!-- <h5>文章附件: <a href="/attachment/{{.Attachment}}">{{.Attachment}}</a></h5> -->
+				{{end}}
+				{{if .IsLogin}}
+				<div  style="text-align: center;">
+					<a id="arstick" href="javascript:stickfn();" class="btn btn-danger" style="width:150px;">{{if eq .Topic.Stick 0}}置顶{{else}}{{if eq .Topic.Stick 1}}已置顶{{end}}{{end}}</a>
+				</div>
+				<script type="text/javascript">
+				function stickfn(){
+				  jQuery.post("/topic/stick",{tid:{{.Topic.Id}}},function(result){
+				    if(result.stick == 0)
+				    {
+				       $("#arstick").text("置顶");
+					   alert("取消置顶成功！");
+					}else if(result.stick == 1)
+					{
+					   $("#arstick").text("已置顶");
+					   alert("置顶成功！");
+					}
+				  });
+			 	}
+				</script>
+				{{end}}
+				<br/>
+				<br/>
+				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+				<br/>
+				<br/>
+			</div>
+			<!-- 点赞代码-->
+			<div id="cyEmoji" role="cylabs" data-use="emoji"></div>
+				<script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/??lib/jquery.js,changyan.labs.js?appid=cysRFg40R" rel="external nofollow" ></script>
+			<!-- 点赞代码-->
+			<div class="related-post">
+				<h6>随机博客</h6>
+				<dl class="fix">
+					<div>
+						{{range .RandTopics}}
+						<dd><a href="/topic/view/{{.Id}}" title="{{.Title}}" target="_blank">
+							<img src="/attachment/topic/200w/{{.Attachment}}" alt="{{.Title}}" />
+							<span>{{.Title}}</span></a></dd>
+							{{end}}
+						</div>
+					</dl>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				
+				<aside class="sidebar">
+					<div class="widget d_postlist">
+						<h3 class="widget_tit">点击排行</h3>
+						<ul style="margin-left: 0px;padding-left: 0px">
+							{{range .HotTopics}}
+							<li><a href="/topic/view/{{.Id}}" target="_blank">
+								<span class="thumbnail">
+								<img  src="/attachment/topic/200w/{{.Attachment}}" alt="{{.Title}}" title="{{.Title}}"/></span>
+								<span class="text">{{.Title}}</span>
+								<span class="muted">{{substr .Created 0 10}}</span>
+								<span class="muted">
+									<span class="ds-thread-count" data-replace="1">{{.Views}}次浏览</span>
+								</span>
+							</a></li>
+							{{end}}<li style="margin-top: 20px;">
+								<form method="post" action="/article/search" class="form-wrapper">
+									<input type="text" id="search" name="search" placeholder="请输入要搜索的文章" required>
+									<input type="submit" value="搜索" id="submit">
+								</form>
+							</li>
+						</ul>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid" style="margin-top: 50px">
+			<!-- 多说评论框 start -->
+			<div class="ds-thread" data-thread-key="topic_comment{{.Topic.Id}}" data-title="{{.Topic.Title}}" data-url="http://kangz.win/topic/view/{{.Topic.Id}}"></div>
+			<!-- 多说评论框 end -->
+			<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+			<script type="text/javascript">
+			var duoshuoQuery = {short_name:"zkang"};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0]
+					|| document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
+			<!-- 多说公共JS代码 end -->
+	</div>
+</section>
+
+{{end}}

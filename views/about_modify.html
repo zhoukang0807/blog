@@ -1,0 +1,96 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>关于修改 - Kangz博客</title>
+<style type="text/css" media="screen">
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}  
+</style> 
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-about-img-container"></div>
+<div class="container">
+  <h1>修改关于</h1>
+  <form method="post" action="/about" enctype="multipart/form-data">
+{{with .About}}
+    <input type="hidden" name="tid" value="{{.Id}}">
+    <div class="form-group">
+      <label>头像:</label><br/>
+     <a class="file">选择文件
+       <input type="file"  onchange="previewFile()" name="attachment">
+     </a>
+      <div class="about">
+          <img id="pre_img" height="150" width="150" src="/attachment/{{.Uname}}/about/{{.Headpic}}"  class="img-circle"  alt="Image preview...">
+       </div>
+    </div>
+     <div class="form-group">
+      <label>笔名：</label>
+      <input type="text" name ="athorName" class="form-control" value="{{.Nickname}}">
+    </div>
+     <div>
+      <label>详细内容：</label>
+      <textarea id="textarea1" name="content"  style="height: 400px">
+      <p>请输入内容...</p>
+      </textarea>
+      <!-- 加载编辑器的容器 -->
+    </div>
+    <button type="submit" class="btn btn-info">确认</button>
+    {{end}}
+  </form>
+</div>
+<script type="text/javascript">
+        
+        var elem = $('#textarea1').get(0);
+
+        // 通过 elem 创建编辑器
+        var editor = new wangEditor(elem);
+
+        // 上传图片
+        editor.config.uploadImgUrl = '/attachment/editor';
+        editor.config.uploadImgFileName = 'editFileName'
+        // 表情显示项
+        editor.config.emotionsShow = 'value';
+
+        editor.create();
+        editor.$txt.html({{.About.Content}});
+        function previewFile() {
+         var preview = $("#pre_img")[0];
+         $(".about").css("display","block");
+         var file  = document.querySelector('input[type=file]').files[0];
+         var reader = new FileReader();
+         reader.onloadend = function () {
+          preview.src = reader.result;
+         }
+         if (file) {
+          reader.readAsDataURL(file);
+         } else {
+          preview.src = "";
+         }
+        }
+
+ </script>
+{{end}}

@@ -1,0 +1,53 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>游戏 - Kangz博客</title>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	<div class="container-fluid">
+		<div class="row">
+			 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 index_about" style="padding-right: 50px;">
+	     	<div class="row" style="padding-top: 20px;padding-right: 50px;">
+                    <h3 class="tm-gold-text tm-title">游戏</h3> 
+                    <article class="excerpt" style="padding: 20px 0 20px 20px">
+                        <div class="tm-related-post">
+                            <div class="media-left media-middle">
+                                <a target="_blank"  href="http://kangz.win:8080/game">
+                                    <img class="media-object" src="/static/img/tm-img-100x100-5.jpg" style="width:200px;height: 150px;" alt="合金弹头" title="合金弹头"  >
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a target="_blank"  href="http://kangz.win:8080/game"><h5 class="media-heading tm-margin-b-15">合金弹头</h5></a>
+                                <p class="tm-small-font tm-media-description">合金弹头</p>
+                            </div>
+                            <!-- ，{{.ReplyCount}}个评论 -->
+                        </div>
+                    </article>
+                </div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-3 col-xl-3">
+				<div class="tm-2-col-right">
+					<div class="tm-2-rows-md-swap">
+						<div class="tm-overflow-auto row tm-2-rows-md-down-2">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<h3 class="tm-gold-text tm-title">
+								热门文章
+								</h3> 
+								<nav>
+									<ul class="nav">
+										{{range .Categories}}
+										<li><a href="/?cate={{.Title}}"  class="tm-text-link">{{.Title}}</a></li>
+										{{end}}
+									</ul>
+								</nav>
+								</div> <!-- col -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{{end}}

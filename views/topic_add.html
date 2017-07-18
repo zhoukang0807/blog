@@ -1,0 +1,134 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>添加文章 - Kangz博客</title>
+<style type="text/css" media="screen">
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}  
+</style> 
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="container">
+  <form method="post" action="/topic" enctype="multipart/form-data">
+    <div class="form-group">
+      <label>文章标题：</label>
+      <input type="text" name="title" class="form-control">
+    </div>
+    <div class="form-group">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" style="margin: 0px 0px 20px 0px;padding: 0px;">
+      <label>文章类型:</label>
+      <select class="form-control" id="ctype" name="type" required="true">
+              <option value="-999">请选择分类类型</option>
+              <option value="1">绘画</option>
+              <option value="2">学习</option>
+              <option value="3">游戏</option>
+              <option value="4">设计</option>
+            </select>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6"  style="margin: 0px 0px 20px 0px;padding: 0px;">
+      <label>文章分类:</label>
+       <select class="form-control" name="category" id="category" required="true">
+              <option value="-999">请选择分类</option>
+            </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>文章标签:  (注：多个标签请使用空格隔开)</label>
+      <input type="text" name ="label" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>文章图片:</label><br/>
+     <a class="file">选择文件
+       <input type="file"  onchange="previewFile()" name="attachment">
+     </a>
+      <div class="about" style="display:none;">
+          <img id="pre_img" height="200" width="150" src=""  class="img-thumbnail"  alt="Image preview...">
+       </div>
+    </div>
+    <div>
+      <label>文章内容：</label>
+      <textarea id="textarea1" name="content"  style="height: 400px">
+      <p>请输入内容...</p>
+      </textarea>
+      <!-- 加载编辑器的容器 -->
+    </div>
+     <div class="form-group" style="padding-top: 20px;">
+     <button type="submit" class="btn btn-info">添加文章</button>
+     </div>
+  </form>
+<script type="text/javascript">
+        
+        var elem = $('#textarea1').get(0);
+
+        // 通过 elem 创建编辑器
+        var editor = new wangEditor(elem);
+
+        // 上传图片
+        editor.config.uploadImgUrl = '/attachment/editor';
+        editor.config.uploadImgFileName = 'editFileName'
+        // 表情显示项
+        editor.config.emotionsShow = 'value';
+
+        editor.create();
+
+        function previewFile() {
+         var preview = $("#pre_img")[0];
+         $(".about").css("display","block");
+         var file  = document.querySelector('input[type=file]').files[0];
+         var reader = new FileReader();
+         reader.onloadend = function () {
+          preview.src = reader.result;
+         }
+         if (file) {
+          reader.readAsDataURL(file);
+         } else {
+          preview.src = "";
+         }
+        }
+
+        $("#ctype").change(function(){
+         $.post("/topic/category",{type:$("#ctype").val()},function(result){
+          $("#category").empty();
+          var data=result.data;
+          if(data.length<1)
+          {
+            $("#category").append("<option value='-999'>请选择分类</option>"); 
+            return;
+          }
+           for(var i  = 0;i<data.length;i++)
+           {
+            $("#category").append("<option value='"+data[i].Title+"'>"+data[i].Title+"</option>"); 
+            if(i===0)
+            {
+              $("#category").val(data[i].Title);
+            }
+           }
+          });
+        });
+ </script>
+</div>
+{{end}}

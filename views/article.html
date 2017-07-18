@@ -1,0 +1,108 @@
+{{template "base/base.html" .}}
+{{define "head"}}
+<title>文章 - Kangz博客</title>
+{{end}}
+{{define "body"}}
+{{template "navbar" .}}
+<div class="tm-blog-img-container"></div>
+<section class="tm-section">
+	<div class="container-fluid">
+		<div class="row">
+			 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+	     	<div class="row" style="padding-right: 50px;">
+	            	 {{if .IsLogin}}
+				  		<a href="/topic/add" class="btn btn-info" style="float: right;">新增文章</a>
+				  		<a href="/category" class="btn btn-info" style="float: right;">新增分类</a>
+		   	          {{end}}
+		   	           <h3 class="widget_tit" style="border-bottom: 1px dashed #ccc;">文章列表</h3>
+	     	{{if .Topics}}
+	     	 {{$login:= .IsLogin}}
+                    {{range .Topics}}
+                    <article class="excerpt" style="padding: 20px 0 20px 20px">
+                        <div class="tm-related-post">
+                            <div class="media-left media-middle">
+                                <a href="/topic/view/{{.Id}}" target="_blank">
+                                    <img class="media-object" src="/attachment/topic/200w/{{.Attachment}}" style="width:200px;height: 150px;" alt="{{.Title}}" title="{{.Title}}"  >
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a href="/topic/view/{{.Id}}" target="_blank"><h5 class="index_title">{{.Title}}</h5></a>
+                                 
+                                <p class="tm-small-font tm-media-description">{{str2html .Content}}</p>
+                                <div class="data" style="margin-top: 10px">
+                                        <span class="time_n artfont1">{{substr .Created 0 10}}</span>
+                                        <span class="read_n artfont2">浏览（{{.Views}}）</span>
+                                        <span class="comment_n artfont3">
+                                        <a class="dateview3" href="/article/aplit/1?cate={{.Category}}" target="_blank">{{.Category}}</a>
+                                         </span>
+                                         {{if $login}}
+						  	             	<a href="/topic/delete?tid={{.Id}}" class="readDelete"></a>
+						     	         {{end}}
+                                        
+                                        <a href="/topic/view/{{.Id}}" class="btn readall" target="_blank">阅读全文>></a>
+                                </div>
+                            </div>
+                            <!-- ，{{.ReplyCount}}个评论 -->
+                        </div>
+                    </article>
+                    {{end}}
+                    {{else}}
+                    <div style="text-align: center;">
+                    <img src="/static/img/nodata.png">
+                    </div>
+                    {{end}}
+                </div>
+                <div class="row">
+				<div class="arrow_box_div">
+					<div class="page">
+						<nav class="pagination" style="font-size: 10px">
+							<ul>
+							{{$current:= .CurrentPage}}
+							{{$searchTxt:= .SearchTxt}}
+								<li><a>共{{.Count}}条</a></li>
+								{{if gt .CurrentPage 1}}<li><a href="/article/aplit/1{{if $searchTxt}}?q={{$searchTxt}}{{end}}">第一页</a></li>{{end}}
+								{{if gt .CurrentPage 1}}<li><a href="/article/aplit/{{.Prev}}{{if $searchTxt}}?q={{$searchTxt}}{{end}}">上一页</a></li>{{end}}
+								{{range .PageArray}}
+								 {{if gt . 0}}
+								  <li {{if eq $current .}} style="background-color: #f0ad4e" {{end}}><a {{if ne $current .}} href="/article/aplit/{{.}}{{if $searchTxt}}?q={{$searchTxt}}{{end}}"{{end}}>{{.}}</a></li>
+								   {{end}}
+								{{end}}
+								{{if lt .CurrentPage .TotalPage}}<li><a href="/article/aplit/{{.Next}}{{if $searchTxt}}?q={{$searchTxt}}{{end}}">下一页</a></li>{{end}}
+								{{if lt .CurrentPage .TotalPage}}<li><a href="/article/aplit/{{.TotalPage}}{{if $searchTxt}}?q={{$searchTxt}}{{end}}">最末页</a></li>{{end}}
+								<li><a>共{{.TotalPage}}页</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-3 col-xl-3">
+				<aside class="sidebar">
+					<div class="widget d_postlist">
+						<h3 class="widget_tit">点击排行</h3>
+						<ul style="margin-left: 0px;padding-left: 0px">
+							{{range .HotTopics}}
+							<li><a href="/topic/view/{{.Id}}" target="_blank">
+								<span class="thumbnail">
+								<img  src="/attachment/topic/200w/{{.Attachment}}" alt="{{.Title}}" title="{{.Title}}"/></span>
+								<span class="text">{{.Title}}</span>
+								<span class="muted">{{substr .Created 0 10}}</span>
+								<span class="muted">
+									<span class="ds-thread-count" data-replace="1">{{.Views}}次浏览</span>
+								</span>
+							</a></li>
+							{{end}}
+							<li style="margin-top: 20px;">
+									<form method="post" action="/article/search" class="form-wrapper">
+										<input type="text" id="search" name="search" placeholder="请输入要搜索的文章" required>
+										<input type="submit" value="搜索" id="submit">
+									</form>
+								</li>
+						</ul>
+					</div>
+				</aside>
+			</div>
+			</div>
+		</div>
+	</section>
+	{{end}}
